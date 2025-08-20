@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kikimora AG — IT Infrastructure • DevOps • Digital Marketing</title>
+  <meta name="description" content="Kikimora AG is a Swiss company providing IT infrastructure, DevOps, and digital marketing services for B2B clients worldwide. White-label partnerships for agencies and consultants."/>
+  <meta name="theme-color" content="#0B0D0F"/>
+  <meta name="color-scheme" content="dark light"/>
+  
+  <!-- Canonical (update after deployment) -->
+  <link rel="canonical" href="/"/>
+
+
+  <!-- Favicons / PWA -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="/favicon/site.webmanifest">
+  <meta name="msapplication-TileColor" content="#0B0D0F">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:title" content="Kikimora AG — IT Infrastructure • DevOps • Digital Marketing"/>
+  <meta property="og:description" content="Swiss B2B provider for infrastructure, DevOps and performance marketing. Global delivery. White-label partnerships."/>
+  <meta property="og:url" content="/"/>
+  <meta property="og:image" content="og/kikimora-og.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="og/kikimora-og.jpg"/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Palette */
+      --bg:#0B0D0F;            /* deep carbon */
+      --layer:#0F1417;         /* panel */
+      --ink:#E7ECEC;           /* text */
+      --muted:#8A959C;         /* secondary */
+      --grid:#151C21;          /* grid line */
+      --line:#1C252B;          /* hairline borders */
+      --accent:#C4FF35;        /* acid lime */
+      --accent-2:#37F3B2;      /* aqua secondary */
+      --danger:#FF3B6E;
+      --ok:#65D88F;
+      --radius:16px;
+      --radius-lg:22px;
+      --shadow:0 20px 80px rgba(0,0,0,.36);
+      --maxw:1180px;
+      --speed:.22s;
+    }
+    [data-theme="light"]{
+      --bg:#F8FAFA; --layer:#FFFFFF; --ink:#0D1113; --muted:#5A656C; --grid:#E7ECEE; --line:#E0E7EA;
+      --shadow:0 20px 60px rgba(8,16,20,.08);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0; color:var(--ink); background:var(--bg); font:400 16px/1.65 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; letter-spacing:.1px;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      /* Retro-futuristic ambience */
+      background-image:
+        radial-gradient(1100px 620px at 110% -10%, color-mix(in oklab, var(--accent), transparent 88%), transparent 60%),
+        radial-gradient(800px 420px at -10% 10%, color-mix(in oklab, var(--accent-2), transparent 90%), transparent 65%),
+        linear-gradient(180deg, rgba(55,243,178,.05), transparent 30%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03), rgba(255,255,255,.03) 1px, transparent 1px, transparent 3px),
+        var(--bg);
+    }
+
+    h1,h2,h3{ font-weight:700; line-height:1.1; margin:0 0 .6em; letter-spacing:.2px; }
+    h1{ font-size:clamp(34px, 6.2vw, 64px); font-family:'IBM Plex Mono', monospace; }
+    h2{ font-size:clamp(22px, 3.4vw, 36px); font-family:'IBM Plex Mono', monospace; }
+    h3{ font-size:clamp(18px, 2.2vw, 22px); }
+    p{ margin:0 0 1em; }
+    a{ color:var(--accent-2); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .container{ max-width:var(--maxw); margin:0 auto; padding:0 20px; }
+    .page{ position:relative; isolation:isolate; }
+    .page::before{
+      /* Grid overlay */
+      content:""; position:fixed; inset:0; pointer-events:none; opacity:.25; mix-blend-mode:soft-light;
+      background-image:
+        linear-gradient(to right, var(--grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+      background-size:24px 24px;
+      mask-image: radial-gradient(1800px 1200px at 60% -20%, #000 0%, transparent 65%);
+      z-index:-1;
+    }
+
+    /* === Header / Nav === */
+    .nav{ position:sticky; top:0; z-index:1000; backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid var(--line); background: color-mix(in oklab, var(--bg), transparent 8%); }
+    .nav-inner{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; gap:10px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.3px; text-transform:uppercase; }
+    .logo{ width:40px; height:40px; border-radius:10px; display:grid; place-items:center; color:#0A0D0E; font:800 18px 'IBM Plex Mono', monospace; background:
+      conic-gradient(from 140deg,#0000 0 25%, var(--accent) 0 50%, #0000 0 75%, var(--accent-2) 0 100%);
+      box-shadow:inset 0 0 0 2px color-mix(in oklab, var(--accent), transparent 50%), 0 6px 22px rgba(0,0,0,.36);
+      position:relative; overflow:hidden;
+    }
+    .logo::after{ content:"K"; position:relative; z-index:1; }
+
+    /* Image logo support */
+    .brand-logo{ width:40px; height:40px; display:block; object-fit:contain; border-radius:10px; }
+
+    .nav-links{ display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+    .nav-links a{ color:var(--ink); padding:8px 10px; border:1px solid transparent; border-radius:10px; }
+    .nav-links a:hover{ border-color: color-mix(in oklab, var(--accent), transparent 60%); }
+
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; font-weight:700; padding:11px 16px; border-radius:999px; border:1.4px solid var(--accent); color:#0B0D0F; background:linear-gradient(180deg, var(--accent), color-mix(in oklab, var(--accent), #000 8%)); box-shadow:0 10px 28px rgba(196,255,53,.18); cursor:pointer; text-decoration:none; transition: transform var(--speed), box-shadow var(--speed), filter var(--speed); }
+    .btn:hover{ transform: translateY(-1px); box-shadow:0 16px 48px rgba(196,255,53,.25); }
+    .btn-ghost{ color:var(--ink); border-color: color-mix(in oklab, var(--accent-2), transparent 60%); background:transparent; box-shadow:none; }
+    .btn-ghost:hover{ border-color: var(--accent-2); }
+
+    /* Ensure header CTA text is black on neon */
+    .nav .btn{ color:#0B0D0F; }
+    .nav .btn:visited{ color:#0B0D0F; }
+
+    .menu-toggle{ display:none; width:42px; height:42px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--ink); cursor:pointer; }
+    .burger, .burger::before, .burger::after{ content:""; display:block; width:20px; height:2px; background:currentColor; border-radius:2px; position:relative; }
+    .burger::before{ position:absolute; top:-6px; } .burger::after{ position:absolute; top:6px; }
+
+    /* Drawer */
+    .drawer{ position:fixed; inset:0; display:none; z-index:1100; }
+    .drawer.open{ display:block; }
+    .drawer-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.38); border:0; }
+    .drawer-panel{ position:absolute; top:0; right:0; bottom:0; width:min(420px, 86vw); background:var(--layer); border-left:1px solid var(--line); box-shadow:var(--shadow); padding:16px; display:grid; grid-template-rows:1fr auto; }
+    .drawer-links{ display:grid; gap:8px; margin-top:6px; }
+    .drawer-links a{ padding:12px 10px; border:1px solid var(--line); border-radius:12px; }
+
+    /* Hero */
+    .hero{ padding:72px 0 40px; }
+    .hero-grid{ display:grid; grid-template-columns:1.22fr .78fr; gap:28px; align-items:center; }
+    .eyebrow{ font:700 12px 'IBM Plex Mono', monospace; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); background:rgba(196,255,53,.12); border:1px solid color-mix(in oklab, var(--accent), transparent 50%); border-radius:999px; padding:6px 10px; display:inline-flex; gap:10px; align-items:center; }
+    .slogan{ color:var(--muted); max-width:62ch; }
+    .hero-cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+
+    .panel{ background:var(--layer); border:1px solid var(--line); border-radius:var(--radius-lg); padding:18px; position:relative; box-shadow:var(--shadow); }
+    .panel.frame::before, .panel.frame::after{ right:10px; bottom:10px; border-left:0;border-top:0; }
+
+    /* === Fancy cyber outlines & shapes === */
+    .fx-steps{ position:relative; }
+    .fx-steps::after{
+      content:""; position:absolute; inset:-8px; pointer-events:none;
+      background:
+        /* main outer border */
+        linear-gradient(var(--accent-2),var(--accent-2)) 16px 0/ calc(100% - 32px) 1.5px no-repeat,
+        linear-gradient(var(--accent-2),var(--accent-2)) 0 16px/ 1.5px calc(100% - 32px) no-repeat,
+        linear-gradient(var(--accent-2),var(--accent-2)) 16px 100%/ calc(100% - 32px) 1.5px no-repeat,
+        linear-gradient(var(--accent-2),var(--accent-2)) 100% 16px/ 1.5px calc(100% - 32px) no-repeat,
+        /* stepped corners */
+        linear-gradient(var(--accent-2),var(--accent-2)) 0 48px/ 12px 1.5px no-repeat,
+        linear-gradient(var(--accent-2),var(--accent-2)) 0 calc(100% - 48px)/ 12px 1.5px no-repeat,
+        linear-gradient(var(--accent-2),var(--accent-2)) 48px 0/ 1.5px 12px no-repeat,
+        linear-gradient(var(--accent-2),var(--accent-2)) calc(100% - 48px) 0/ 1.5px 12px no-repeat;
+      border-radius: calc(var(--radius-lg) + 10px);
+      filter: drop-shadow(0 10px 28px rgba(55,243,178,.18));
+    }
+
+    .ticket{ position:relative; border-radius:20px; overflow:visible; }
+    .ticket::before, .ticket::after{
+      content:""; position:absolute; top:50%; transform:translateY(-50%); width:22px; height:22px;
+      background: var(--bg); border:1px solid var(--line); border-radius:50%;
+      box-shadow: inset 0 0 0 1.2px color-mix(in oklab,var(--accent-2),transparent 30%);
+    }
+    .ticket::before{ left:-11px; }
+    .ticket::after{ right:-11px; }
+
+    .neo-outline{ box-shadow:0 0 0 1px color-mix(in oklab, var(--accent-2), transparent 40%), var(--shadow); }
+
+    /* Wireframe globe (contact) */
+    #contact .container{ position:relative; }
+    .wire-globe{ width:min(420px,38vw); aspect-ratio:1; place-self:center; border-radius:50%;
+      background: radial-gradient(closest-side, rgba(196,255,53,.06), transparent 70%);
+      border:1px solid color-mix(in oklab, var(--accent), transparent 80%);
+      pointer-events:none;
+    }
+    .wire-globe svg{ width:100%; height:100%; display:block; filter: drop-shadow(0 0 14px rgba(196,255,53,.25)); }
+    @media (max-width:1040px){ .wire-globe{ margin:0 auto 12px; opacity:.7; } }
+    .panel.frame::before{ left:10px; top:10px; border-right:0;border-bottom:0; }
+    .panel.frame::after{ right:10px; bottom:10px; border-left:0;border-top:0; }
+
+    /* Sections */
+    .section{ padding:58px 0; }
+    .section-head{ display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:16px; }
+    .divider{ width:180px; height:1px; background:linear-gradient(90deg, transparent, var(--accent-2), transparent); margin-top:8px; }
+
+    .grid-3{ display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+    .grid-2{ display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; }
+    .auto{ display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:14px; }
+
+    .card{ background:var(--layer); border:1px solid var(--line); border-radius:var(--radius); padding:16px; transition: transform var(--speed), border var(--speed), box-shadow var(--speed); position:relative; }
+    .card:hover{ transform:translateY(-2px); border-color: color-mix(in oklab, var(--accent-2), transparent 40%); box-shadow:0 16px 44px rgba(55,243,178,.12); }
+    .card h3{ margin-bottom:.4em; font-family:'IBM Plex Mono', monospace; }
+
+    .check{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+    .check li{ position:relative; padding-left:22px; }
+    .check li::before{
+    content:"";
+    position:absolute; left:0; top:.45em;
+    width:12px; height:12px;
+    background:linear-gradient(180deg, var(--accent), color-mix(in oklab, var(--accent), #000 12%));
+    border:0;
+    -webkit-mask: url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">\
+    <path d="M6 0l6 3v6l-6 3L0 9V3z"/></svg>') center/contain no-repeat;
+            mask: url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">\
+    <path d="M6 0l6 3v6l-6 3L0 9V3z"/></svg>') center/contain no-repeat;
+    }
+
+
+    .kicker{ font:700 12px 'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin-bottom:6px; }
+    .note{ color:var(--muted); font-size:14px; }
+
+    .cta-banner{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; border:1px dashed color-mix(in oklab, var(--accent-2), transparent 50%); background:linear-gradient(90deg, rgba(55,243,178,.06), transparent 60%); border-radius:16px; padding:14px 16px; }
+
+    /* Contact form */
+    form{ display:grid; gap:12px; }
+    label{ font:600 13px 'IBM Plex Mono', monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+    input, textarea, select{ font:600 16px/1.45 'Space Grotesk', sans-serif; padding:12px 14px; color:var(--ink); background:var(--bg); border:1.6px solid color-mix(in oklab, var(--accent-2), transparent 58%); border-radius:12px; transition:border var(--speed), box-shadow var(--speed), background var(--speed); }
+    input::placeholder, textarea::placeholder{ color:color-mix(in oklab, var(--muted), transparent 15%); }
+    input:focus, textarea:focus, select:focus{ outline:none; border-color:var(--accent-2); box-shadow:0 0 0 4px color-mix(in oklab, var(--accent-2), transparent 80%); }
+
+    footer{ padding:36px 0; border-top:1px solid var(--line); color:var(--muted); font-size:14px; }
+
+    /* Responsive */
+    @media (max-width:1040px){ .hero-grid{ grid-template-columns:1fr; } .grid-3{ grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:700px){ .grid-3, .grid-2{ grid-template-columns:1fr; } .nav-links{ display:none; } .menu-toggle{ display:grid; place-items:center; } .brand span{ display:none; } }
+
+    /* Motion safety */
+    @media (prefers-reduced-motion: reduce){ *{ transition-duration:.001ms !important; animation-duration:.001ms !important; animation-iteration-count:1 !important; } }
+  </style>
+</head>
+<body class="page" data-theme="dark">
+  <header class="nav" role="navigation" aria-label="Primary">
+    <div class="nav-inner container">
+      <a href="#top" class="brand" aria-label="Kikimora AG — top">
+        <img class="brand-logo" src="images/kikimora-logo.png" alt="Kikimora AG logo" width="40" height="40" loading="eager" decoding="async"/>
+        <span>Kikimora AG</span>
+      </a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#workwith">Who we work with</a>
+        <a href="#clients">Our clients</a>
+        <a href="#partners">For partners</a>
+        <a href="#contact" class="btn">Contact Us</a>
+      </nav>
+      <button id="menuToggle" class="menu-toggle" aria-label="Open menu" aria-controls="mobileDrawer" aria-expanded="false"><span class="burger"></span></button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <aside id="mobileDrawer" class="drawer" role="dialog" aria-modal="true" aria-label="Mobile menu">
+    <div class="drawer-panel">
+      <nav class="drawer-links" aria-label="Sections (mobile)"></nav>
+      <div class="note">© <span id="y"></span> Kikimora AG</div>
+    </div>
+    <button class="drawer-backdrop" aria-label="Close"></button>
+  </aside>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">{ IT Infrastructure • DevOps • Digital Marketing }</span>
+          <h1></h1>
+
+          <h1>Building Secure Digital Foundations for Global Business.</h1>
+          <p class="slogan">Kikimora AG is a Swiss company providing IT infrastructure, DevOps, and digital marketing services for B2B clients worldwide.</p>
+          <div class="hero-cta">
+            <a class="btn" href="#contact">Contact Us</a>
+            <a class="btn-ghost" href="#services">View Services</a>
+          </div>
+        </div>
+        <aside class="panel frame fx-steps neo-outline" aria-label="Key facts">
+          <div class="kicker">Snapshot</div>
+          <ul class="check">
+            <li>Swiss stock corporation (Aktiengesellschaft, AG)</li>
+            <li>Founder: Aleksandrs Sirotkins</li>
+            <li>Delivery: Europe, United Kingdom, USA, Canada, MENA, Asia</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>About Us</h2>
+            <div class="divider" aria-hidden="true"></div>
+          </div>
+          <p class="note">Swiss precision • Global delivery • Long-term partnerships</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Company</h3>
+            <ul class="check">
+              <li>Kikimora AG is a Swiss stock corporation (Aktiengesellschaft, AG) registered in Switzerland</li>
+              <li>Founder: Aleksandrs Sirotkins</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Business areas</h3>
+            <ul class="check">
+              <li>IT infrastructure</li>
+              <li>DevOps</li>
+              <li>Digital marketing</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Client geography</h3>
+            <ul class="check">
+              <li>Europe & the United Kingdom</li>
+              <li>USA & Canada</li>
+              <li>MENA & Asia</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Services</h2>
+            <div class="divider" aria-hidden="true"></div>
+          </div>
+          <p class="note">Secure by default. Modular. Measurable.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>1) IT Infrastructure & DevOps</h3>
+            <ul class="check">
+              <li>Deployment of virtual machines, containers (Docker, Kubernetes), and managed databases</li>
+              <li>24/7 Security Operations Center (SOC)</li>
+              <li>Zero Trust Architecture</li>
+              <li>Cloud migration, ERP/CRM implementation, IT audits</li>
+              <li>Backup & Disaster Recovery</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>2) Digital Marketing & Performance</h3>
+            <ul class="check">
+              <li>Search advertising (Google Ads, Bing Ads)</li>
+              <li>Display and retargeting campaigns</li>
+              <li>Social media advertising (Meta, LinkedIn, TikTok)</li>
+              <li>SEO and technical website audits</li>
+              <li>Content creation and reputation management</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>3) Partner & White-Label Solutions</h3>
+            <ul class="check">
+              <li>White-label delivery (infrastructure, DevOps, marketing)</li>
+              <li>Licensing and sales support</li>
+              <li>Hosting, server maintenance, data protection</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="workwith" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Who We Work With</h2>
+            <div class="divider" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="auto">
+          <article class="card">
+            <ul class="check">
+              <li>B2B companies with annual revenue of €500K+</li>
+              <li>Digital-first and cross-border business models</li>
+              <li>Solutions for founders, CTOs, and consultants</li>
+              <li>Commitment to long-term partnerships</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="clients" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Our Clients</h2>
+            <div class="divider" aria-hidden="true"></div>
+          </div>
+          <p class="note">We work with:</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <ul class="check">
+              <li>Financial and investment firms (VCs, brokers, FinTech)</li>
+              <li>Legal and consulting companies</li>
+              <li>SaaS and DevOps providers</li>
+            </ul>
+          </article>
+          <article class="card">
+            <ul class="check">
+              <li>E-commerce and online retailers</li>
+              <li>EdTech and online education businesses</li>
+              <li>Digital agencies, media production, and PR consultants</li>
+            </ul>
+          </article>
+          <article class="card">
+            <div class="kicker">Engagement</div>
+            <p>We align KPIs, agree on security posture, and deliver in sprints. Our team interfaces with founders and technical leads and integrates with existing workflows.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="partners" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>For Partners</h2>
+            <div class="divider" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <ul class="check">
+              <li>White-label services for agencies and consultants</li>
+              <li>Support in infrastructure, marketing, and DevOps</li>
+              <li>Opportunity to resell under your own brand</li>
+            </ul>
+          </article>
+          <article class="card">
+            <div class="kicker">How it works</div>
+            <p>Choose delivery mode — silent white-label or visible technical partner. We provide SLAs, documentation, and co-selling assets when needed.</p>
+          </article>
+        </div>
+        <div class="cta-banner ticket fx-steps" style="margin-top:14px">
+          <p class="note" style="margin:0">Have a pipeline and need a reliable backend team?</p>
+          <a class="btn" href="#contact">Discuss a partnership</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Contacts</h2>
+            <div class="divider" aria-hidden="true"></div>
+          </div>
+          <p class="note">Send a short brief — we’ll reply on a business day.</p>
+        </div>
+        <div class="grid-2">
+          <figure class="wire-globe" aria-hidden="true">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <filter id="glow"><feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#C4FF35" flood-opacity=".45"/></filter>
+              </defs>
+              <g fill="none" stroke="#C4FF35" stroke-width="1.2" opacity=".9" filter="url(#glow)">
+                <!-- outline -->
+                <circle cx="100" cy="100" r="88"/>
+                <!-- latitudes -->
+                <ellipse cx="100" cy="100" rx="88" ry="30"/>
+                <ellipse cx="100" cy="100" rx="88" ry="60"/>
+                <ellipse cx="100" cy="100" rx="88" ry="80"/>
+                <!-- longitudes -->
+                <ellipse cx="100" cy="100" rx="30" ry="88"/>
+                <ellipse cx="100" cy="100" rx="60" ry="88"/>
+                <ellipse cx="100" cy="100" rx="80" ry="88"/>
+              </g>
+            </svg>
+          </figure>
+          <!-- Formspree form -->
+          <form id="contactForm" class="card" autocomplete="on" action="https://formspree.io/f/xkgzlpll" method="POST">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required>
+
+            <label for="email">Work e-mail</label>
+            <input id="email" name="email" type="email" placeholder="you@company.com" required>
+
+            <label for="topic">Topic</label>
+            <select id="topic" name="topic" required>
+              <option value="Infrastructure & DevOps">Infrastructure & DevOps</option>
+              <option value="Digital Marketing">Digital Marketing</option>
+              <option value="White-label / Partnership">White-label / Partnership</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <label for="msg">Brief</label>
+            <textarea id="msg" name="message" rows="5" placeholder="Context, goals, timeline, constraints"></textarea>
+
+            <!-- honeypot + custom subject -->
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true"
+                   style="position:absolute; left:-9999px; opacity:0; height:0; width:0;">
+            <input type="hidden" name="_subject" value="Kikimora AG — new inquiry">
+
+            <label class="note"><input type="checkbox" required> I confirm the business nature of the request and consent to data processing.</label>
+            <button class="btn" type="submit">Send</button>
+            <div id="formStatus" class="note" role="status" aria-live="polite"></div>
+          </form>
+
+          <aside class="card panel frame">
+            <div class="kicker">Direct</div>
+            <p style="margin:0 0 8px">Email: <a id="emailLink" href="mailto:ceo@kikimora.cc">ceo@kikimora.cc</a> <button id="copyEmail" class="btn-ghost" type="button" style="padding:6px 10px;margin-left:6px">Copy</button></p>
+            <div class="kicker" style="margin-top:14px">Shareholder’s address</div>
+            <p>Baarerstrasse 10, 6300 Zug, Switzerland</p>
+            <div class="kicker" style="margin-top:14px">Security</div>
+            <p class="note">Prefer a protected channel? Request PGP or a secure messenger in your message.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img class="brand-logo" src="images/kikimora-logo.png" alt="" width="28" height="28" style="border-radius:6px;"/>
+        <span>© <span id="y2"></span> Kikimora AG — Swiss stock corporation</span>
+      </div>
+      <div class="note">Infrastructure • DevOps • Performance marketing — Global delivery</div>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Kikimora AG",
+    "url": "/",
+    "description": "IT infrastructure, DevOps and digital marketing for B2B clients worldwide. White-label partnerships.",
+    "founder": {"@type":"Person","name":"Aleksandrs Sirotkins"},
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Imantas 2. linija 19",
+      "addressLocality": "Riga",
+      "postalCode": "LV-1083",
+      "addressCountry": "LV"
+    },
+    "areaServed": "Worldwide",
+    "sameAs": []
+  }
+  </script>
+
+  <script>
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+    document.getElementById('y2').textContent = new Date().getFullYear();
+
+    // Clone desktop links into drawer
+    (function(){
+      const src = document.querySelector('.nav-links');
+      const dst = document.querySelector('.drawer-links');
+      if (src && dst && !dst.children.length){
+        [...src.querySelectorAll('a')].forEach(a => dst.appendChild(a.cloneNode(true)));
+      }
+    })();
+
+    // Mobile drawer toggle
+    (function(){
+      const toggle = document.getElementById('menuToggle');
+      const drawer = document.getElementById('mobileDrawer');
+      const backdrop = drawer?.querySelector('.drawer-backdrop');
+      function open(){ drawer.classList.add('open'); toggle.setAttribute('aria-expanded', 'true'); document.body.style.overflow='hidden'; }
+      function close(){ drawer.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow=''; }
+      toggle?.addEventListener('click', ()=> drawer.classList.contains('open') ? close() : open());
+      backdrop?.addEventListener('click', close);
+      drawer?.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+      drawer?.addEventListener('click', (e)=>{ const a = e.target.closest('a'); if(a) close(); });
+    })();
+
+    // Smooth scroll for anchor links (desktop too)
+    document.addEventListener('click', (e)=>{
+      const a = e.target.closest('a[href^="#"]'); if(!a) return;
+      const id = a.getAttribute('href'); if(!id || id.length < 2) return;
+      const el = document.querySelector(id); if(!el) return;
+      e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'});
+      history.replaceState(null, '', id);
+    });
+
+    // Contact form: Formspree (AJAX)
+    (function(){
+      const form = document.getElementById('contactForm'); if(!form) return;
+      const status = document.getElementById('formStatus');
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        status.textContent = 'Sending…';
+        try{
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok){
+            form.reset();
+            status.textContent = "Thank you — we'll reply on a business day.";
+          } else {
+            const data = await res.json().catch(()=> ({}));
+            status.textContent = (data.errors && data.errors.map(e => e.message).join(', ')) ||
+              'Submission failed. Please email us directly: ceo@kikimora.cc';
+          }
+        }catch(err){
+          status.textContent = 'Network error. Please email us directly: ceo@kikimora.cc';
+        }
+      });
+    })();
+
+    // Copy e-mail
+    (function(){
+      const btn = document.getElementById('copyEmail');
+      const link = document.getElementById('emailLink');
+      btn?.addEventListener('click', async ()=>{
+        try{ await navigator.clipboard.writeText(link.textContent.trim()); btn.textContent = 'Copied'; setTimeout(()=> btn.textContent = 'Copy', 1200); }catch(e){ btn.textContent = 'Copy failed'; }
+      });
+    })();
+  </script>
+</body>
+</html>
